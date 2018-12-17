@@ -1,0 +1,45 @@
+html {
+
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.player {
+	width: 600px;
+	height: 700px;
+	position: relative;
+	margin: 50px auto;
+	border: 1px solid #CCC;
+	box-shadow: 1px 1px 15px #CCC;
+}
+
+.video {
+	position: absolute;
+	left:0;
+	right:0;
+	top: 0;
+	bottom:43px;
+}
+
+.control-play-pause {
+	float: left;
+    width: 16px;
+   	height:24px;
+}
+.toolbar {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(255,255,255,0.8);
+	padding: 13px 0 13px;
+}
+
+.progress-container {
+	position: absolute;
+	left: 64px;
+	right: 79px;
+	width: auto;
+}

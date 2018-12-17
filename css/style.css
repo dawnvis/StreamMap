@@ -1,0 +1,41 @@
+body {
+	margin:0;
+	padding:0;
+	font-family:  'Montserrat';
+	line-height: 1.5em;
+	font-size: 12px;
+}
+
+.z-depth-2 {
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); }
+
+#sub_container_0{
+    margin:0px auto;
+    width:800px;
+    height:600px;
+    margin-top:20px;
+    margin-left:20px;
+    float:left;
+    border-radius:6px;
+}
+
+#sub_container_1{
+    margin:0px auto;
+    width:800px;
+    height:600px;
+    margin-top:20px;
+    margin-left:20px;
+    float:left;
+    border-radius:6px;
+}
+
+.infobar {
+    font-family: Helvetica, Arial, sans-serif;
+    background: #fff;
+    opacity: 0.7;
+    z-index: 1000;
+    right: 10px;
+    bottom: 10px;
+    position: absolute;
+    padding: 15px;
+}

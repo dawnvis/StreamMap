@@ -1,0 +1,83 @@
+html {
+
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.player {
+	width: 800px;
+	height: 570px;
+	position: relative;
+	margin: 0px auto;
+	border: 1px solid #CCC; 
+	border-bottom-style: none;
+}
+
+.axis {
+	width: 800px;
+	height: 32px;
+	position: relative;
+	margin: 0px auto;
+	border: 1px solid #CCC;
+	border-top-style: none;
+}
+
+.cloudlines {
+	width: 800px;
+	height: 400px;
+	position: relative;
+	margin: 0px auto;
+	border: 1px solid #CCC;
+	border-top-style: none;
+}
+
+.candidates {
+	width: 800px;
+	height: 256px;
+	position: relative;
+	margin: 0px auto;
+	border: 1px solid #CCC;
+	border-top-style: none;
+}
+
+.sankeyflow {
+	width: 1024px;
+	height: 1000px;
+	position: relative;
+	margin: 0px auto;
+	border: none;
+	border-top-style: none;
+}
+
+.video {
+	position: absolute;
+	left:0;
+	right:0;
+	top: 0;
+	bottom:50px;
+}
+
+.control-play-pause {
+	float: left;
+	left: 16px;
+    width: 16px;
+   	height:24px;
+}
+.toolbar {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(255,255,255,0.8);
+	padding: 13px 0 13px;
+}
+
+.progress-container {
+	position: absolute;
+	left: 64px;
+	right: 79px;
+	width: auto;
+	bottom: 18px;
+}

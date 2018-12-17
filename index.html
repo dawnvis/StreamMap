@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>StreamMap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="external/cssmenu/cssmenu.css" />
+    <link rel="stylesheet" href="external/leaflet/leaflet.css" />
+
+    <script src="external/jquery/jquery-1.10.2.js"></script>
+    <script src="external/jquery/jquery-ui-1.10.4.custom.min.js"></script>
+    <script src="external/cssmenu/cssmenu.js"></script>
+    <script src="external/d3/d3.min.js"></script>
+
+    <script src="external/leaflet/leaflet.js"></script>
+    <script src="external/leaflet/leaflet-heat.js"></script>
+    <script src="external/leaflet/leaflet.points-layer.js"></script>
+    <script src='external/leaflet/mapbox-gl.v0.12.js'></script>
+    <script src="external/leaflet/leaflet-mapbox-gl.js"></script>
+
+    <script src="external/FileSaver.js"></script>
+
+    <script src="lib/Common/CommonDefine.js"></script>
+    <script src="lib/GCommonFuncUtility.js"></script>
+    <script src="lib/Common/MathFuncUtility.js"></script>
+    <script src="lib/Common/MatlabFuncUtility.js"></script>
+    <script src="lib/Common/LabelingBlobs.js"></script>
+    <script src="lib/MsgManager.js"></script>
+    <script src="lib/MenuEvent.js"></script>
+    <script src="lib/LeafletMapManager.js"></script>
+    <script src="lib/StreamMapManager.js"></script>
+
+</head>
+<body>
+
+<div id='cssmenu'></div>
+<div id="container"></div>
+
+<script>
+
+    var msgMgr = new MsgManager();
+    var mapMgr0 = new LeafletMapManager();
+    var mapMgr1 = new LeafletMapManager();
+    var streamMapMgr = new StreamMapManager();
+    var dataLoaded = false;
+    var animPlaying = false;
+
+    var curAnimFrame = 1;
+    
+    //0. Layout
+    $( "#container" ).load( "layout/main.html", function(){
+        $( "#cssmenu" ).load( "layout/menu.html", function(){
+            init();
+            running();
+        } );
+    } );
+
+    //1. Init
+    function init(){
+
+        // Init Menu
+        $("#cssmenu").menumaker({
+            title: "StreamMap",
+            format: "multitoggle"
+        });
+
+        // Init Other
+        msgMgr.init();
+
+        //
+        mapMgr0.init( "sub_container_0", [33.89511, 114.1582], 5 );
+        mapMgr1.init( "sub_container_1", [33.89511, 114.1582], 5 );
+        
+        var fileNames = [
+            "data/aqi_realtime/2017-06-01-10.txt",
+            "data/aqi_realtime/2017-06-03-14.txt"
+            ];
+        for (var j = 0; j < fileNames.length; j++) {
+            dataLoading( j, fileNames[j] );
+        };
+    }
+
+    //2. Update
+    function running()
+    {
+        requestAnimationFrame( running );
+        msgMgr.run();
+
+        if ( dataLoaded && animPlaying ) {
+            streamMapMgr.update();
+        };
+    }
+
+    function allDataLoaded(){
+        var mapCtx0 = mapMgr0.getHeatColData();
+        var mapCtx1 = mapMgr1.getHeatColData();
+        var mapGradient = mapMgr0.getHeatGradient();
+        var mapGrayData0 = mapMgr0.getHeatGrayData();
+        var mapGrayData1 = mapMgr1.getHeatGrayData();
+
+        streamMapMgr.init( 800, 600, mapCtx0, mapCtx1, mapGradient, mapGrayData0, mapGrayData1 );
+        
+        dataLoaded = true;
+    }
+
+    function dataLoading( id, filename ){
+        d3.csv(filename, function(text) {
+          var input_data = text;
+          var gReceivedData = new Array( input_data.length );
+          for (var i = 0; i < gReceivedData.length; i++) {
+            gReceivedData[i] = new Array(4);
+            gReceivedData[i][0] = input_data[i]["lan"];
+            gReceivedData[i][1] = input_data[i]["lng"];
+            gReceivedData[i][2] = input_data[i]["aqi"];
+            gReceivedData[i][3] = input_data[i]["aqi"];
+          };
+
+          if ( id == 0 ) {
+            mapMgr0.addDataWithClean( gReceivedData );
+            mapMgr0.showData( mapMgr0.EnumShowMode.Heatmap );
+          }else{
+            mapMgr1.addDataWithClean( gReceivedData );
+            mapMgr1.showData( mapMgr0.EnumShowMode.Heatmap );
+            allDataLoaded();
+          };
+        });
+    }
+
+</script>
+    
+</body>
+</html>
